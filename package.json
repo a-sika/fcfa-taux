@@ -1,0 +1,12 @@
+{
+  "name": "fcfa-taux",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Site statique de taux de change FCFA, généré et publié automatiquement chaque jour.",
+  "scripts": {
+    "build": "node build.mjs",
+    "serve": "node serve.mjs"
+  },
+  "engines": { "node": ">=20" }
+}
