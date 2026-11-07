@@ -127,7 +127,7 @@ th{color:var(--mut);font-weight:600;font-size:.82rem}td.r,th.r{text-align:right}
 .up{color:var(--ac2)}.dn{color:#e03131}
 .chips{display:flex;flex-wrap:wrap;gap:8px}.chips a{padding:6px 11px;border:1px solid var(--bd);border-radius:20px;text-decoration:none;font-size:.9rem;background:var(--card)}
 details{border-bottom:1px solid var(--bd);padding:9px 0}summary{cursor:pointer;font-weight:600}
-.aff{border-left:4px solid var(--ac)}footer{border-top:1px solid var(--bd);padding:20px 0;color:var(--mut);font-size:.85rem}
+.aff{border-left:4px solid var(--ac)}.cta{display:inline-block;margin-top:8px;padding:9px 16px;border-radius:10px;background:var(--ac);color:#fff;text-decoration:none;font-weight:700}footer{border-top:1px solid var(--bd);padding:20px 0;color:var(--mut);font-size:.85rem}
 @media(max-width:560px){.conv{grid-template-columns:1fr}.conv button{width:100%}h1{font-size:1.4rem}}
 `;
 
@@ -194,8 +194,12 @@ function converterWidget(fromCode, toCode, amount) {
 }
 
 function affiliateBlock() {
-  if (!config.affiliates?.length) return '';
-  return config.affiliates.map((a) => `<div class="card aff"><strong>${esc(a.title)}</strong><br>${esc(a.text)}<br><a href="${esc(a.url)}" rel="sponsored noopener" target="_blank">${esc(a.cta || 'En savoir plus')}</a></div>`).join('');
+  // Les entrées sans "url" sont ignorées : il suffit de coller le lien pour activer le bloc.
+  const list = (config.affiliates || []).filter((a) => a && /^https:\/\//.test(a.url || ''));
+  if (!list.length) return '';
+  return list.map((a) => `<div class="card aff"><strong>${esc(a.title)}</strong><br>${esc(a.text)}<br>
+<a class="cta" href="${esc(a.url)}" rel="sponsored nofollow noopener" target="_blank">${esc(a.cta || 'En savoir plus')} →</a>
+<div class="mut" style="margin-top:6px">Lien partenaire : ce site peut percevoir une commission, sans frais supplémentaires pour vous.</div></div>`).join('');
 }
 
 const scriptTag = () => `<script>window.__R=${JSON.stringify(Object.fromEntries(['EUR', ...codes.filter((c) => c !== 'EUR')].map((c) => [c, perEur[c]])))};</script><script>${CLIENT_JS}</script>`;

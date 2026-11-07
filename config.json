@@ -5,7 +5,14 @@
   "ownerName": "Équipe Taux FCFA",
   "contactEmail": "",
   "adsenseClient": "",
-  "affiliates": [],
+  "affiliates": [
+    {
+      "title": "Envoyer de l'argent vers ou depuis l'Afrique ?",
+      "text": "Comparez : transferts au taux réel du marché, avec des frais clairs et affichés avant l'envoi.",
+      "cta": "Essayer Wise",
+      "url": ""
+    }
+  ],
   "currencies": [
     ["EUR", "Euro"],
     ["USD", "Dollar américain"],
