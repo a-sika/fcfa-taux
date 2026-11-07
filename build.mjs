@@ -1,7 +1,7 @@
 // Générateur du site "Taux FCFA".
 // Usage : node build.mjs   (produit le dossier dist/)
 // Aucune dépendance : Node 20+ suffit. Tourne chaque jour dans GitHub Actions.
-import { readFile, writeFile, mkdir, rm } from 'node:fs/promises';
+import { readFile, writeFile, mkdir, rm, cp } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -321,6 +321,8 @@ await rm(DIST, { recursive: true, force: true });
 await mkdir(DIST, { recursive: true });
 await writeFile(join(DIST, 'style.css'), CSS.trim());
 await writeFile(join(DIST, '.nojekyll'), '');
+// Fichiers copiés tels quels à la racine du site (ex. vérification Google)
+if (existsSync(join(ROOT, 'public'))) await cp(join(ROOT, 'public'), DIST, { recursive: true });
 for (const p of pages) {
   const dir = join(DIST, p.path);
   await mkdir(dir, { recursive: true });
